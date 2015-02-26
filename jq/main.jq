@@ -1,4 +1,4 @@
-# Copyright (c) 2014 Peter Koppstein (pkoppstein at gmail dot com) 2014.11.05
+# Copyright (c) 2014-2015 Peter Koppstein (pkoppstein at gmail dot com) 2015.02.24
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 # 
-# Credits: http://opensource.org/licenses/MIT (The MIT License (MIT)
+# Credits: http://opensource.org/licenses/MIT (The MIT License)
 
 # This file is self-contained and provides these "BigInt" functions
 # for working with possibly-signed arbitrarily long decimal strings.
@@ -124,7 +124,7 @@ def long_add(num1; num2):
       add($a1[1]; $a2[1]) as $sum
       | if $a1[0] == 1 then $sum else $sum | negate end
     elif $a1[0] == 1 then minus($a1[1]; $a2[1])
-    else minus($a2[1] ;$a1[1]) | negate
+    else minus($a2[1]; $a1[1])
     end
   end ;
 
@@ -150,9 +150,10 @@ def long_multiply(num1; num2):
     | (num2 | explode | map(.-48) | reverse) as $a2
     | reduce range(0; num1|length) as $i1
         ([];  # result
-         reduce range(0; num2|length) as $i2 (.;
-  	  ($i1 + $i2) as $ix
-  	  | ( $a1[$i1] * $a2[$i2] + (if $ix >= length then 0 else .[$ix] end) ) as $r
+         reduce range(0; num2|length) as $i2
+           (.;
+            ($i1 + $i2) as $ix
+            | ( $a1[$i1] * $a2[$i2] + (if $ix >= length then 0 else .[$ix] end) ) as $r
             | if $r > 9 # carrying
               then
                 .[$ix + 1] = ($r / 10 | floor) +  (if $ix + 1 >= length then 0 else .[$ix + 1] end )
@@ -161,7 +162,7 @@ def long_multiply(num1; num2):
                 .[$ix] = $r
               end
          )
-       ) 
+        ) 
     | reverse | map(.+48) | implode;
 
   (num1|stripsign) as $a1
@@ -226,7 +227,8 @@ def long_divide(x;y):  # x/y => [q,r]
 
   # divvy(num; yy) - input and output are [m, sum] where:
   #    num and sum are strings representing non-negative integers;
-  # On conclusion, assuming num and yy are positive, m is the maximum integer such that m * yy == sum <= num
+  # On conclusion, assuming num and yy are positive,
+  # m is the maximum integer such that m * yy == sum <= num
   def divvy(num; yy):
     (num|ltrim) as $n
     | if $n == "0" then .
@@ -238,7 +240,6 @@ def long_divide(x;y):  # x/y => [q,r]
           else .
           end
     end;
-
 
   # [quotient; remainder]
   def _divide(x;y): # x and y are non-negative
@@ -253,8 +254,9 @@ def long_divide(x;y):  # x/y => [q,r]
             ( ["",""];      # state: [q, r]
               .[0] as $q | (.[1] + "0") as $r
               | (long_add($r; x[$i:$i+1])) as $num
-              | [0, "0"] | divvy($num; y) 
-              | [ ($q + (.[0]|tostring)), long_add($num; "-" + .[1]) ]
+              | [0, "0"] | divvy($num; y)
+              | ( "-" + .[1]) as $negate
+              | [ ($q + (.[0]|tostring)), long_add($num; $negate) ]
             )
         end
       | map(ltrim)

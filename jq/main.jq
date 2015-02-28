@@ -23,8 +23,10 @@
 # This file is self-contained and provides these "BigInt" functions
 # for working with possibly-signed arbitrarily long decimal strings.
 
-# def negate:
+# def gcd(x;y)           # greatest common divisor
 # def lessOrEqual(x; y): # x <= y
+# def negate:
+# def long_abs:          # absolute value
 # def long_add(x;y):     # x+y
 # def long_minus(x;y):   # x-y
 # def long_power(i):     # .^i
@@ -277,3 +279,18 @@ def long_div(x;y):
 
 def long_mod(x;y):
   long_divide(x;y) | .[1];
+
+def long_abs:
+  . as $in
+  | if lessOrEqual("0"; $in) then $in else negate end;
+
+def gcd(a; b):
+  # subfunction rgcd expects [a,b] as input
+  # i.e. a ~ .[0] and b ~ .[1]
+  def rgcd:
+    .[0] as $a | .[1] as $b
+    | if $b == "0" then $a
+      else long_mod($a ; $b ) as $lm
+      | [$b, $lm ] | rgcd
+      end;
+  [a, b] | rgcd | long_abs ;

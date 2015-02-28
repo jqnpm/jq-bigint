@@ -25,6 +25,17 @@ null
 lessOrEqual("101010444"; "49695")
 false
 
+lessOrEqual(.[0]; .[1]): true
+["-2", "-1"]
+lessOrEqual(.[0]; .[1])
+true
+
+lessOrEqual(.[0]; .[1]): true
+["-2", "1"]
+lessOrEqual(.[0]; .[1])
+true
+
+
 long_add(x; y): basic.
 null
 long_add("10000000000000000"; "20000000000000000")
@@ -38,6 +49,11 @@ long_add("-2";"1")
 long_add: positive + negative
 null
 long_add("1";"-2")
+"-1"
+
+long_add(.[0];.[1])
+["1","-2"]
+long_add(.[0];.[1])
 "-1"
 
 long_add: long
@@ -79,6 +95,21 @@ long_mod(x; y): basic.
 null
 long_mod("10000000000000123"; "10000000000000000") 
 "123"
+
+gcd: basic
+null
+gcd("2";"3")
+"1"
+
+gcd: signed
+null
+gcd("-2";"6")
+"2"
+
+gcd: gcd(.[0];.[1])
+["7","77"]
+gcd(.[0];.[1])
+"7"
 EOF
 
 function testAllFourLineTests () {

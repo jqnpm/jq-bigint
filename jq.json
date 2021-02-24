@@ -6,12 +6,14 @@
     "bugs": "https://github.com/joelpurra/jq-bigint/issues",
     "author": {
         "name": "Joel Purra",
-        "url": "http://joelpurra.com/"
+        "url": "https://joelpurra.com/"
     },
-    "contributors": [{
-        "name": "Peter Koppstein",
-        "url": "https://github.com/pkoppstein"
-    }],
+    "contributors": [
+        {
+            "name": "Peter Koppstein",
+            "url": "https://github.com/pkoppstein"
+        }
+    ],
     "main": "./jq/main.jq",
     "repository": {
         "type": "git",
@@ -22,10 +24,12 @@
         "jq": "^1.5.0",
         "jqnpm": "^1.0.0"
     },
-    "licenses": [{
-        "type": "MIT",
-        "url": "http://opensource.org/licenses/MIT"
-    }],
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    ],
     "keywords": [
         "jq-package"
     ]

@@ -38,7 +38,7 @@ import "joelpurra/jq-bigint" as BigInt;
 ---
 
 ## License
-Copyright (c) 2014, 2015 Peter Koppstein <https://github.com/pkoppstein> and Joel Purra <http://joelpurra.com/>
+Copyright (c) 2014, 2015 Peter Koppstein <https://github.com/pkoppstein> and Joel Purra <https://joelpurra.com/>
 All rights reserved.
 
 When using **jq-bigint**, comply to the MIT license. Please see the LICENSE file for details.

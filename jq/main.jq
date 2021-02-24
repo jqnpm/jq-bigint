@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 # 
-# Credits: http://opensource.org/licenses/MIT (The MIT License)
+# Credits: https://opensource.org/licenses/MIT (The MIT License)
 
 # This file is self-contained and provides these "BigInt" functions
 # for working with possibly-signed arbitrarily long decimal strings.
